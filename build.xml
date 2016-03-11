@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--	Run this build.xml in the top IB v9.72 BETA FEB 03 directory
+
+-->
+
+<project default="main">
+
+	<!-- MAIN Target, does everything -->
+	<target name="main" depends="clean, init, compile, createApplicationJAR">
+		<echo>./lib/${ApplJar} successfully built and deployed !</echo>
+	</target>
+
+	<target name="clean">
+		<delete dir="classes" />
+		<mkdir dir="classes" />
+		<delete dir="lib" />
+		<mkdir dir="lib" />
+	</target>
+
+
+	<target name="init">
+		<tstamp>
+			<format property="build.time" pattern="yyyy-MM-dd HH:mm:ss" />
+			<format property="build.file_name" pattern="yyyy-MM-dd HH-mm-ss" />
+		</tstamp>
+		
+		<!--	 BUILD VERSION -->
+		<property name="header" value="##Generated file - do not modify!" />
+		
+		<propertyfile file="version.properties" comment="${header}">
+			<entry key="product.build.major" type="int" default="1" value='1' />
+			<entry key="product.build.minor" type="int" value="1" operation="+" />
+			<entry key="product.build.patch" type="int" value="0" />
+			<entry key="product.build.date" type="date" value="now" />
+		</propertyfile>
+		
+		<property file="version.properties" />
+
+		<property name="appversion" value="${product.build.major}.${product.build.minor}" />
+		
+		<echo>version is ${appversion}</echo>
+
+		<property name="ApplJar" value="IB-api-972-beta-feb03-${appversion}.jar" />
+		
+	</target>
+
+
+	<!-- Compiles everything under 'java' to 'classes'. Use classpath 'lib' -->
+	<target name="compile">
+		<javac compiler="javac1.8" target="1.8" encoding="ISO-8859-1" srcdir="." destdir="classes" debug="true">
+			<classpath>
+				<fileset dir="lib" />
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- Creates ./production/lib/${ApplJar} including both *.class and *.java as well as resources/* -->
+	<target name="createApplicationJAR">
+		<jar destfile="./lib/${ApplJar}">
+			<fileset dir="classes" includes="**/*.class" />
+			<fileset dir="com" includes="**/*.java" />
+		</jar>
+	</target>
+    
+</project>
