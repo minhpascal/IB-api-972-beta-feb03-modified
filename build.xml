@@ -59,7 +59,7 @@
 	<target name="createApplicationJAR">
 		<jar destfile="./lib/${ApplJar}">
 			<fileset dir="classes" includes="**/*.class" />
-			<fileset dir="com" includes="**/*.java" />
+			<fileset dir="." includes="**/*.java" />
 		</jar>
 	</target>
     
