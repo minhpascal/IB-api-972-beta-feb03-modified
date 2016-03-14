@@ -39,11 +39,13 @@ public class OrderState {
     public void status(String v)             { m_status = v; }
     public void warningText(String v)        { m_warningText = v; }
 
-	OrderState() {
+	// # FIX BY PA    
+	public OrderState() {
 		this (null, null, null, null, 0.0, 0.0, 0.0, null, null);
 	}
 
-	OrderState(String status, String initMargin, String maintMargin,
+	// # FIX BY PA
+	public OrderState(String status, String initMargin, String maintMargin,
 			String equityWithLoan, double commission, double minCommission,
 			double maxCommission, String commissionCurrency, String warningText) {
 	    m_status = status;
